@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="text-align: center">
+        <canvas id="mo" width="600" height="300" style="margin: 100px; border: 1px solid red;">
+
+        </canvas>
+        
+        <pre id="res" style="width: 50%; margin: 0px auto;"></pre>
+
+        <script>
+
+            var canvas = document.getElementById("mo");
+            var res = document.getElementById("res");
+
+            function getMousePosition(e) {
+                var rect = this.canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
+            
+            function Shape(boom, tile) {
+                
+                this.selectedNum = false;
+                
+                this.shapes = [];
+                this.paths = [];
+                this.tile = tile;
+                this.boom = boom;
+                this.field = boom.getContext("2d");
+                
+                this.clearField = function () {
+                    this.field.clearRect(0, 0, this.boom.width, this.boom.height);
+                };
+                
+            }
+            
+            Shape.prototype.add = function(x, y, color, num, type) {
+                this.shapes.push({x:x, y:y, color:color, num:num, type:type});
+            };
+            
+            Shape.prototype.contain = function (x, y) {
+                for (i = 0; i < this.shapes.length; i++) {
+                    if ((this.shapes[i].x <= x) && (this.shapes[i].x + this.tile >= x) && (this.shapes[i].y <= y) && (this.shapes[i].y + this.tile >= y)) {
+                        this.selectedNum = i;
+                        return true;
+                    }
+                }
+                this.selectedNum = false;
+                return false;
+            };
+            
+            Shape.prototype.drawField = function () {
+                this.clearField();
+                for (i = 0; i < o.shapes.length; i++) {
+                    this.field.fillStyle = this.shapes[i].color || "red";
+                    this.field.fillRect(this.shapes[i].x, this.shapes[i].y, this.tile, this.tile);
+                }
+            };
+            
+            Shape.prototype.start = function () {
+                
+            };
+            
+            
+
+            var o = new Shape(canvas, 45);
+            
+            o.add(100,100, "yellow",    1, 1);
+            o.add(100,150, "red", 1, 1);
+            o.add(100,200, "blue", 1, 1);
+            
+            
+            o.drawField();
+            
+            canvas.addEventListener("click", function (e) {
+                
+                var pos = getMousePosition(e);
+                
+                res.innerHTML = pos.x + ", " + pos.y;
+                
+                isSelect = o.contain(pos.x, pos.y);
+                
+                if(isSelect) {
+                    if (o.selectedNum >= 0) {
+                        tempColor = o.shapes[o.selectedNum].color;
+                        o.shapes[o.selectedNum].color = "rgba(0, 0, 0, .2)";
+                        o.shapes[o.selectedNum].x = o.shapes[o.selectedNum].x + 10;
+                        o.drawField();
+                        o.shapes[o.selectedNum].color = tempColor;
+                    }
+                }
+                
+                
+            });
+            
+            j = 1;
+            
+            Shape.prototype.move = function (dd) {
+                
+                for (i = 0; i < this.shapes.length; i++) {
+                    this.shapes[i].x = this.shapes[i].x + Math.floor(Math.random() * 6);
+                    j++;
+                    if(j > 10) {
+                        clearInterval(dd);
+                    }
+                }
+                o.drawField();
+            };
+            
+            var ii = window.setInterval("o.move(ii)", 200);
+            
+            
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Hockey Board</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/f/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                margin: 0px;
+                padding: 0px;
+            }
+
+            .tools-button {
+                text-align: center;
+                
+                cursor: pointer;
+                margin-bottom: 2px;
+            }
+
+            #field {
+                border: 1px solid white;
+                margin-top: 3%;
+            }
+
+            #resolution button {
+                font-size: 8px;
+                text-align: center;
+            }
+            
+            #tools {
+                text-align: center;
+                padding: 6px;
+                width: 100%;
+                /*display: none;*/
+            }
+            #tools button {
+/*                display: inline-block;
+                width: 50%;
+                float: left;*/
+            }
+            
+            #menu-button {
+                height: 30px;
+                padding: 0px 5px;
+                text-align: center;
+                line-height: 30px;
+                background-color: rgba(0,180,0, .8);
+                opacity: .1;
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                z-index: 10000;
+            }
+            #menu-button:hover {
+                opacity: 1;
+            }
+            #menu-box {
+                width: 100%;
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                background-color: lightblue;
+                display: none;
+                z-index: 1000;
+                padding: 10px;
+            }
+            #menu-content {
+                display: relative;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        
+        <div id="menu-button" onclick="">menu</div>
+        
+        <div id="ci" style="text-align: center; padding: 0px 0px; margin: 0px auto; width: 95%;">
+            <canvas id="field" >
+                Your browser does not support html canvas. Please update your browser and try again.
+            </canvas>
+        </div>
+        
+        <div id="menu-box">
+            <div id="menu-content">
+                <div id="tools"> 
+                    <button class="tools-button" onclick="current_tool(1)" title="line">
+                        line
+                    </button>
+                    <button class="tools-button" onclick="current_tool(1.1)" title="dash-line">
+                        dash-line
+                    </button>
+                    <button class="tools-button" onclick="current_tool(2)" title="add player square">
+                        add squ.
+                    </button>
+                    <button class="tools-button" onclick="current_tool(3)" title="add player circle">
+                        add circle
+                    </button>
+                    <button class="tools-button" onclick="current_tool(4)" title="clear field">
+                        clear field
+                    </button>
+                    <button class="tools-button" onclick="clear_lines()">
+                        clear all lines
+                    </button>
+                    <button class="tools-button" onclick="current_tool(0)" title="move shapes">
+                        move
+                    </button>
+                    <button class="tools-button" onclick="current_tool(0)" title="fill color">
+                        fill
+                    </button>
+                    <button class="tools-button" onclick="grid_toggle()" title="grid">
+                        grid
+                    </button>
+                    <button class="tools-button" onclick="get_current()" title="get type">
+                        get type
+                    </button>
+                    <button class="tools-button" onclick="get_current_shape_num()" title="get shape number">
+                        shape num.
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <script src="/assets.js" type="text/javascript"></script>
+        <script src="/Hockey.js" type="text/javascript"></script>
+        <script src="/HockeyBootstrap.js" type="text/javascript"></script>
+        <script src="/AnimationTest.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $("#menu-button").on('click', function () {
+                $("#menu-box").toggle(0);
+            });
+            
+            var output = document.getElementById("pi");
+            document.addEventListener("keyup", function (e) {
+                if ((e.metaKey || e.ctrlKey) && e.which == 90) {
+                    $("#menu-box").toggle(0);
+                }
+            });
+            
+        </script>
+
+    </body>
+
+</html>
